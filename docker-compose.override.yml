@@ -1,0 +1,47 @@
+version: '3.8'
+
+# This file overrides docker-compose.yml for development
+# It enables debugging, hot reload, and verbose logging
+
+services:
+  user-service:
+    environment:
+      - DEBUG=*
+      - LOG_LEVEL=debug
+    volumes:
+      - ./services/user-service:/app
+      - /app/node_modules
+
+  product-service:
+    environment:
+      - DEBUG=*
+      - LOG_LEVEL=debug
+    volumes:
+      - ./services/product-service:/app
+      - /app/node_modules
+
+  order-service:
+    environment:
+      - DEBUG=*
+      - LOG_LEVEL=debug
+    volumes:
+      - ./services/order-service:/app
+      - /app/node_modules
+
+  payment-service:
+    environment:
+      - DEBUG=*
+      - LOG_LEVEL=debug
+    volumes:
+      - ./services/payment-service:/app
+      - /app/node_modules
+
+  postgres:
+    environment:
+      - POSTGRES_INITDB_ARGS=--encoding=UTF8
+    volumes:
+      - ./init-scripts:/docker-entrypoint-initdb.d
+
+  elasticsearch:
+    environment:
+      - xpack.security.enabled=false
